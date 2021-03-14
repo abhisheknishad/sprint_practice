@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import com.cg.apps.task1.customerms.ui.CustomerUI;
-import com.cg.apps.task1.item.ui.ItemUI;
+//import com.cg.apps.task1.item.ui.ItemUI;
 
 @SpringBootApplication
 public class Task1Application {
@@ -15,8 +15,8 @@ public class Task1Application {
 		CustomerUI customerUI = context.getBean(CustomerUI.class);
 		customerUI.start();
 		
-		ItemUI itemUI = context.getBean(ItemUI.class);
-		itemUI.start();
+		/*ItemUI itemUI = context.getBean(ItemUI.class);
+		itemUI.start();*/
 	}
 	}
 

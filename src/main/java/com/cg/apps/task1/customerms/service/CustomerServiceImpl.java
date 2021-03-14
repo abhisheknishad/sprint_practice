@@ -1,6 +1,7 @@
 package com.cg.apps.task1.customerms.service;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import com.cg.apps.task1.customerms.dao.CustomerDaoImpl;
 import com.cg.apps.task1.customerms.dao.ICustomerDao;
 import com.cg.apps.task1.customerms.entities.*;
 import com.cg.apps.task1.customerms.exception.*;
+import com.cg.apps.task1.item.entites.Item;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
@@ -50,6 +52,14 @@ public class CustomerServiceImpl implements ICustomerService {
 		custDao.update(customer);
 		return customer;
 	}
+	
+	@Transactional
+	@Override
+	public Set<Item> itemsBoughtByCustomer(Long customerID) {
+		Customer customer = findByID(customerID);
+		Set<Item> items=customer.getBroughtItems();
+		return items;
+	}
 
 	public void validateId(Long id) {
 		if (id == null) {
@@ -67,5 +77,7 @@ public class CustomerServiceImpl implements ICustomerService {
 				throw new InvalidNameException("Name cannot be null");
 			}
 		}
+
+
 
 	}
