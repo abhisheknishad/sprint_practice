@@ -1,6 +1,9 @@
 package com.cg.apps.task1.customerms.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +17,10 @@ import com.cg.apps.task1.customerms.dto.CustomerDetails;
 import com.cg.apps.task1.customerms.entities.Customer;
 import com.cg.apps.task1.customerms.service.ICustomerService;
 import com.cg.apps.task1.customerms.util.CustomerUtil;
+import com.cg.apps.task1.item.dto.ItemDetails;
+import com.cg.apps.task1.item.entites.Item;
+import com.cg.apps.task1.item.service.IItemService;
+import com.cg.apps.task1.item.util.ItemUtil;
 
 @RequestMapping("/customers")
 @RestController
@@ -25,7 +32,11 @@ public class CustomerRestController {
 	@Autowired
 	private CustomerUtil util;
 	
-	@RequestMapping("/byid/{id}")
+	@Autowired
+	private ItemUtil itemUtil;
+	
+	
+	@GetMapping("/byid/{id}")
 	public CustomerDetails fetchedCustomer(@PathVariable("id") long customerId) {
 		Customer customer=custService.findByID(customerId);
 		CustomerDetails details=util.toDetails(customer);
@@ -46,6 +57,14 @@ public class CustomerRestController {
 		CustomerDetails customer = util.toDetails(created);
 		return "Amount Added in Customer Account";
 	}
+	
+	@GetMapping("/customer/{id}")
+	public Set<ItemDetails> itemBoughtByCustomer(@PathVariable Long id) {
+		Set<Item> itemSet = custService.itemsBoughtByCustomer(id);
+		return itemUtil.toDetailSet(itemSet);
+	}
+	
+	
 }
 	
 

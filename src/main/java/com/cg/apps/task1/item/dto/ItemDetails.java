@@ -2,21 +2,16 @@ package com.cg.apps.task1.item.dto;
 
 import java.time.LocalDateTime;
 
+import com.cg.apps.task1.customerms.entities.Customer;
+
 public class ItemDetails {
 	private String itemId;
 	private double price;
 	private String itemDescription;
 	private LocalDateTime addedDate;
+	private long custId;
+	private String custName;
 	
-	/*public ItemDetails() {}
-
-	public ItemDetails(String itemId, double price, String itemDescription, LocalDateTime addedDate) {
-		this.itemId = itemId;
-		this.price = price;
-		this.itemDescription = itemDescription;
-		this.addedDate = addedDate;
-	}*/
-
 	public String getItemId() {
 		return itemId;
 	}
@@ -24,7 +19,6 @@ public class ItemDetails {
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
-	
 
 	public double getPrice() {
 		return price;
@@ -49,5 +43,25 @@ public class ItemDetails {
 	public void setAddedDate(LocalDateTime addedDate) {
 		this.addedDate = addedDate;
 	}
+
+	public long getCustId() {
+		return custId;
+	}
+
+	public void setCustId(long custId) {
+		this.custId = custId;
+	}
+
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+
+	
+	
 
 }

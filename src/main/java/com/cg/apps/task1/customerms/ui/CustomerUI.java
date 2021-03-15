@@ -37,7 +37,7 @@ public class CustomerUI {
 			displayItemDetails(item1);
 			String itemFetched=item2.getId();
 			Item newItem=itemService.buyItem(item1.getId(), customer1.getId());
-			Item newItem2=itemService.buyItem(item2.getId(), customer1.getId());
+			//Item newItem2=itemService.buyItem(item2.getId(), customer1.getId());
 			
 			
 			Customer abhishek=custService.addAmount(customerFetched, 1000);
