@@ -1,6 +1,7 @@
 package com.cg.apps.task1.customerms.service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -9,35 +10,49 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cg.apps.task1.customerms.dao.CustomerDaoImpl;
-import com.cg.apps.task1.customerms.dao.ICustomerDao;
+import com.cg.apps.task1.customerms.dao.IAccountRepository;
+import com.cg.apps.task1.customerms.dao.ICustomerRepository;
 import com.cg.apps.task1.customerms.entities.*;
 import com.cg.apps.task1.customerms.exception.*;
 import com.cg.apps.task1.item.entites.Item;
 
 @Service
-public class CustomerServiceImpl implements ICustomerService {
+public class CustomerServiceImpl implements ICustomerService{
 	@Autowired
-	private ICustomerDao custDao;
+	private ICustomerRepository custRepo;
+	
 	@Autowired
-	private EntityManager entityManager;
+	private IAccountRepository accRepo;
 
 	@Override
 	public Customer findByID(Long customerID) {
 		validateId(customerID);
-		Customer customer = custDao.findByID(customerID);
-		return customer;
+		/*Customer customer = custDao.findByID(customerID);
+		return customer;*/
+		Optional<Customer>customer=custRepo.findById(customerID);
+		if(!customer.isPresent()) {
+			throw new CustomerNotFoundException("Customer not found for id"+customerID);
+		}
+		return customer.get();
 	}
 
 	@Transactional
 	@Override
 	public Customer createCustomer(String name) {
-		validateName(name);
+		/*validateName(name);
 		LocalDateTime time = LocalDateTime.now();
 		Account account = new Account(10000.0, time);
 		entityManager.persist(account);
 		Customer customer = new Customer(name, account);
 		custDao.add(customer);
+		return customer;*/
+		
+		validateName(name);
+		LocalDateTime time = LocalDateTime.now();
+		Account account = new Account(10000.0, time);
+		accRepo.save(account);
+		Customer customer = new Customer(name, account);
+		custRepo.save(customer);
 		return customer;
 	}
 
@@ -45,11 +60,18 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public Customer addAmount(Long customerId, double amount) {
 		validateId(customerId);
-		Customer customer = custDao.findByID(customerId);
+		/*Customer customer = findByID(customerId);
 		Account account = customer.getAccount();
 		account.setBalance(account.getBalance() + amount);
 		entityManager.persist(account);
 		custDao.update(customer);
+		return customer;*/
+		
+		Customer customer = findByID(customerId);
+		Account account = customer.getAccount();
+		account.setBalance(account.getBalance() + amount);
+		accRepo.save(account);
+		custRepo.save(customer);
 		return customer;
 	}
 	

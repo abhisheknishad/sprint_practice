@@ -1,4 +1,4 @@
-package com.cg.apps.task1.item.dao;
+/*package com.cg.apps.task1.item.dao;
 
 import java.util.Random;
 
@@ -45,4 +45,4 @@ public class ItemDaoImpl implements IItemDao {
 		return entityManager.find(Item.class, itemID);
 	}
 
-}
+}*/
