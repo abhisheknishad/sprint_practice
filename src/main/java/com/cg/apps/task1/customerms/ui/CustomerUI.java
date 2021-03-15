@@ -25,29 +25,34 @@ public class CustomerUI {
 	public void start() {
 		try {
 			Customer customer1 = custService.createCustomer("Abhishek");
-			displayCustomerDetails(customer1);
+			//displayCustomerDetails(customer1);
 			Customer customer2 = custService.createCustomer("Arpit");
-			displayCustomerDetails(customer2);
+			//displayCustomerDetails(customer2);
 			Long customerFetched = customer1.getId();
+			
+			
 			
 			Item item1 =itemService.create(50.0, "frutis");
 			Item item2 =itemService.create(100.0, "ice-cream");
 			displayItemDetails(item1);
 			String itemFetched=item2.getId();
-
 			Item newItem=itemService.buyItem(item1.getId(), customer1.getId());
 			Item newItem2=itemService.buyItem(item2.getId(), customer1.getId());
-			Set<Item>items=custService.itemsBoughtByCustomer(customerFetched);
-			for(Item item:items) {
-				System.out.println("Item "+item.getDescription()+" is bought by "+item.getBoughtBy().getName());
-			}
 			
-			//displayCustomerDetails(customer1);
+			
+			Customer abhishek=custService.addAmount(customerFetched, 1000);
+			System.out.println("Displaying amount of Abhishek");
+			displayCustomerDetails(abhishek);
+			
+			customer1=custService.findByID(customerFetched);
+			displayCustomerDetails(customer1);
+			System.out.println("ITEM details");
+			displayItemDetails(item2);
 			
 
 		} catch (InvalidIdException e) {
 			System.out.println(e.getMessage());
-		} catch (InvalidNameException e) {
+		} catch (InvalidCustomerNameException e) {
 			System.out.println(e.getMessage());
 		} catch (InvalidAmountException e) {
 			System.out.println(e.getMessage());
@@ -59,6 +64,10 @@ public class CustomerUI {
 	public void displayCustomerDetails(Customer customer) {
 		System.out.println("Id:" + customer.getId() + "\nName:" + customer.getName() + "\nAccountBalance:"
 				+ customer.getAccount().getBalance());
+		Set<Item>items=customer.getBroughtItems();
+		for(Item item:items) {
+			System.out.println("Item "+item.getDescription()+" is bought by "+item.getBoughtBy().getName());
+		}
 		
 	}
 	public void displayItemDetails(Item item) {

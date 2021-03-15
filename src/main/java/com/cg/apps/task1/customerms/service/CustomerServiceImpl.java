@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
 		public void validateName(String name) {
 			if (name == null || name.isEmpty() || name.trim().isEmpty()) {
-				throw new InvalidNameException("Name cannot be null");
+				throw new InvalidCustomerNameException("Name cannot be null");
 			}
 		}
 
